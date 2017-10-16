@@ -1,0 +1,13 @@
+<h2>Current Message:</h2>
+<!-- {{shows | json }} -->
+
+<fieldset *ngIf="shows._user">
+
+	<!-- messages get displayed ********************************************** -->
+	<h3>{{shows.content}}</h3>
+	<p> Posted by: {{shows._user.name}}</p>
+	<p>Likes: {{shows.like}}</p>
+
+
+	
+</fieldset>

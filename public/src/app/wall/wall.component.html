@@ -1,0 +1,78 @@
+<h2>Welcome, {{currentUser.name}}!</h2>
+<h3>Create a new message:</h3>
+
+<!-- BackEnd validation errors ************************ -->
+<div *ngIf="errors.length>0">
+	<p *ngFor="let error of errors">{{error}}</p>	
+</div>
+
+<!-- Creates a new message ************************************** -->
+<form (submit)="newMessage()">
+	<p *ngIf="!content.prestine && content.invalid">The message must be at least 8 characters long</p>
+	<!-- FrontEnd Validations Errors **************************************** -->
+	<!-- <input type="text" [(ngModel)]="message.content" name = "content" #content="ngModel" minlength=8> -->
+	<!-- <input *ngIf="content.valid" type="submit" name=""> -->
+	<input type="text" [(ngModel)]="message.content" name ="content" #content="ngModel">
+	<input type="submit" name="">
+</form>
+
+
+
+
+<h4>All messages:</h4>
+<fieldset *ngFor="let message of messages; let i= index ">
+
+		<!-- messages get deleted *********************************************** -->
+	<form (submit)="delete(message._id)" *ngIf="currentUser._id == message._user._id">
+	<!-- *ngIf="currentUser._id == message._user._id -->
+		<input type="submit" name="delete" value="Delete Message">
+	</form>
+
+	<!-- messages get displayed ********************************************** -->
+	<p>{{message.content}}</p>
+	<p>Posted by: {{message._user.name}}</p>
+	
+
+
+
+
+	<h4>Comments on this message:</h4>
+	<fieldset *ngFor="let comment of message.comments">
+		<!-- Comments get displayed ********************************************** -->
+		<p>{{comment.content}}</p>
+		<p>Commented by: {{comment._user.name}}</p>
+	</fieldset>
+
+
+
+		<!-- This is where the likes are generated ******************************** -->
+		<form (submit)="likes(message._id)">
+			<input type="submit" name="likes" value="Like: {{ message.like }}">
+		</form>
+
+		<!-- Button that shows you only the message that was clicked on -->
+		<form (submit)="show(message._id)">
+			<input type="submit" name="show" value="View Message">
+			
+		</form>
+
+
+	<h5>Add a new comment:</h5>
+	<!-- Creates a new comment ************************************** -->
+	<!-- Keeps letters from outPopulating in other comment boxes -->
+	<form (submit)="newComment(message._id, i)">
+		<input type="text" [(ngModel)]="comment[i]" name = "content-{{i}}">
+		<input type="submit" name="">
+	</form>
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
